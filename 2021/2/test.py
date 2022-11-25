@@ -1,10 +1,14 @@
+#!/usr/bin/env python3
+
 import unittest
+import os
 from main import *
 
 
-class TestDay2(unittest.TestCase):
+class TestDay(unittest.TestCase):
     def setUp(self):
-        with open('sample.txt') as f:
+        filename = os.path.join(os.path.dirname(__file__), 'sample.txt')
+        with open(filename) as f:
             self.moves = [line.rstrip() for line in f]
 
     def test_update_position_forward(self):
@@ -48,3 +52,4 @@ class TestDay2(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
