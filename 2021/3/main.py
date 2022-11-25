@@ -1,16 +1,21 @@
 #!/usr/bin/env python3
 
-import os, argparse
+import os
+import argparse
 from collections import Counter
+
 
 def binary_to_int(s):
     return int(s, base=2)
 
+
 def flip_bits_to_int(s):
     return int(s, base=2) ^ (2 ** len(s) - 1)
 
+
 def get_bits_in_col(col, data):
     return [bits[col] for bits in data]
+
 
 def most_common_bit_in_col(col, data):
     counter = Counter(get_bits_in_col(col, data))
@@ -21,6 +26,7 @@ def most_common_bit_in_col(col, data):
     bit, count = counter.most_common()[0]
     return bit
 
+
 def least_common_bit_in_col(col, data):
     counter = Counter(get_bits_in_col(col, data))
 
@@ -30,8 +36,10 @@ def least_common_bit_in_col(col, data):
     bit, count = counter.most_common()[-1]
     return bit
 
+
 def filter_bit_in_col(col, bit, data):
     return [x for x in data if x[col] == bit]
+
 
 def reduce_most_common_bits(data):
     def reduce(l, col=0):
@@ -47,6 +55,7 @@ def reduce_most_common_bits(data):
 
     return reduce(data)
 
+
 def reduce_least_common_bits(data):
     def reduce(l, col=0):
         if len(l) == 0:
@@ -60,6 +69,7 @@ def reduce_least_common_bits(data):
             return reduce(filter_bit_in_col(col, bit, l), col+1)
 
     return reduce(data)
+
 
 def parse_report(data, verbose=False):
     if len(data) > 0:
@@ -88,9 +98,10 @@ def parse_report(data, verbose=False):
 
         return power_consumption, life_support
 
-def main(fname,  verbose=False):
-    if os.path.exists(fname):
-        with open(fname) as f:
+
+def main(filename,  verbose=False):
+    if os.path.exists(filename):
+        with open(filename) as f:
             data = [line.rstrip() for line in f]
         
         power, life = parse_report(data, verbose)

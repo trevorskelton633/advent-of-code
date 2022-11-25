@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 
-import os, argparse
+import os
+import argparse
+
 
 def count_times_data_increased(inputs, verbose=False):
     increased = 0
@@ -11,14 +13,18 @@ def count_times_data_increased(inputs, verbose=False):
         if verbose:
             print(f'{prev} (N/A - No previous data yet)')
 
-        for i in inputs [1:]:
-            if verbose:
-                print('{} ({})'.format(i, 
-                                       'increased' if i > prev else 'decreased' if i < prev else 'no change'))
+        for i in inputs[1:]:
             increased = increased + (1 if i > prev else 0)
             prev = i
 
-        return f'Number of times increased: {increased}'
+            if verbose:
+                print('{} ({})'.format(i,
+                                       'increased' if i > prev else
+                                       'decreased' if i < prev else
+                                       'no change'))
+
+        return increased
+
 
 def sum_elements_in_window(inputs, size=3):
     sums = []
@@ -31,15 +37,18 @@ def sum_elements_in_window(inputs, size=3):
     return sums
         
 
-def main(fname, windowed=False, verbose=False):
-    if os.path.exists(fname):
-        with open(fname) as f:
+def main(filename, windowed=False, verbose=False):
+    if os.path.exists(filename):
+        with open(filename) as f:
             inputs = list(map(int, f.readlines()))
 
         if windowed:
             inputs = sum_elements_in_window(inputs)
 
-        print(count_times_data_increased(inputs, verbose))
+        increased = count_times_data_increased(inputs, verbose)
+
+        print(f'Number of times increased: {increased}')
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Advent of Code 2021  Day 1')
